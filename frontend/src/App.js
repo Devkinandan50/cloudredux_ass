@@ -9,6 +9,7 @@ import { Home } from './Pages/Home';
 import Main from './Pages/Main';
 import Signup from './Pages/Signup';
 import Login from './Pages/login';
+import AddJob from './Pages/AddJob'
 import SomeState from './context/some_State/Some_State';
 
 // import dotenv from 'dotenv';
@@ -33,6 +34,9 @@ function App() {
                 </Route>
                 <Route exact path="/login">
                   <Login />
+                </Route>
+                <Route exact path="/addjob">
+                  <AddJob />
                 </Route>
               </Switch>
             </div>

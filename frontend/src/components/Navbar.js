@@ -15,7 +15,7 @@ const Navbar = () => {
         let ans = window.confirm("You want to logout");
         if (ans) {
             localStorage.removeItem('token');
-            // localStorage.removeItem('token');
+            localStorage.removeItem('admin');
             setlogin(false);
             history.push("/");
             window.location.reload();

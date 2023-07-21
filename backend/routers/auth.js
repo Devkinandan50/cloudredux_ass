@@ -124,7 +124,7 @@ router.post('/login', [
     const authtoken = jwt.sign(data, JWT_SECRET);
     // const authtoken = user.generateAuthToken();
     success = true;
-    res.status(200).send({ success, authtoken, message: "logged in successfully", "firstname": user.firstname, "lastname": user.lastname, "email": user.email });
+    res.status(200).send({ success, authtoken, message: "logged in successfully", "firstname": user.firstname, "lastname": user.lastname, "email": user.email, "admin": user.admin });
     // res.json({ success, authtoken, "name": user.name, "email": user.email })
 
   } catch (error) {

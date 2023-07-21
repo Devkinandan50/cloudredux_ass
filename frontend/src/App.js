@@ -8,6 +8,7 @@ import Navbar from './components/Navbar';
 import { Home } from './Pages/Home';
 import Main from './Pages/Main';
 import Signup from './Pages/Signup';
+import Login from './Pages/login';
 
 // import dotenv from 'dotenv';
 // dotenv.config();
@@ -28,6 +29,9 @@ function App() {
                 </Route>
                 <Route exact path="/signup">
                   <Signup />
+                </Route>
+                <Route exact path="/login">
+                  <Login />
                 </Route>
               </Switch>
             </div>

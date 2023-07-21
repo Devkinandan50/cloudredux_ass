@@ -8,34 +8,38 @@ import { Select, MenuItem, FormHelperText, FormControl, InputLabel } from '@mate
 
 
 const Login = () => {
+    let history = useHistory();
     const [credentials, setCredentials] = useState({ email: "", password: "" })
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // const response = await fetch(`${host}/api/auth/login`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ email: credentials.email, password: credentials.password })
-        // });
-        // const json = await response.json()
-        // // console.log(json);
-        // if (json.success) {
-        //     // Save the auth token and redirect
-        //     localStorage.setItem('token', json.authtoken);
-        //     set_checK_loginOr_not(true);
-        //     setloginusername(json.firstname);
-        //     toast.success(`${json.message}`, {
-        //         position: "top-center"
-        //     });
-        //     history.push("/");
-        // }
-        // else {
-        //     toast.error(`${json.error || json.error.msg}`, {
-        //         position: "top-center"
-        //     });
-        // }
+        // http://localhost:5000/api/auth/createuser
+        const response = await fetch(`http://localhost:5000/api/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: credentials.email, password: credentials.password })
+        });
+        const json = await response.json()
+        // console.log(json);
+        if (json.success) {
+            // Save the auth token and redirect
+            localStorage.setItem('token', json.authtoken);
+            localStorage.setItem('admin', json.admin);
+            localStorage.setItem('login', true);
+            // set_checK_loginOr_not(true);
+            
+            alert(`${json.message}`, {
+                position: "top-center"
+            });
+            history.push("/");
+        }
+        else {
+            alert(`${json.error || json.error.msg}`, {
+                position: "top-center"
+            });
+        }
     }
 
     const onChange = (e) => {

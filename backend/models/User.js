@@ -21,8 +21,8 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    image:{
-        type: String,
+    admin:{
+        type: Boolean,
         required: true
     },
     verified: { 

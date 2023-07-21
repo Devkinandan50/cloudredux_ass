@@ -8,8 +8,15 @@ import { Select, MenuItem, FormHelperText, FormControl, InputLabel } from '@mate
 
 
 const Signup = () => {
+
     
-    const [credentials, setCredentials] = useState({ firstname: "", lastname: "", email: "", password: "", cpass: "", admin: "false" })
+        const [isAdmin, setIsAdmin] = useState(false);
+      
+        const handleSwitchChange = () => {
+          setIsAdmin((prevIsAdmin) => !prevIsAdmin);
+        };
+
+    const [credentials, setCredentials] = useState({ firstname: "", lastname: "", email: "", password: "", cpass: "" })
 
     const onchange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value })
@@ -20,33 +27,30 @@ const Signup = () => {
         const { firstname, lastname, email, password, cpass } = credentials;
 
         if (cpass === password) {
-            // console.log('Form data submitted:', credentials);
+            console.log(credentials)
+            console.log(isAdmin)
 
 
-
-
-            alert("signup success")
-            setCredentials({ firstname: "", lastname: "", email: "", password: "", cpass: "", admin: "false" });
-            // const response = await fetch(`${host}/api/auth/createuser`, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify({ firstname: firstname, lastname: lastname, email: email, password: password, image: base64code })
-            // });
-            // const json = await response.json()
-            // console.log(json);
-            // if (json.success) {
-            //     setCredentials({firstname: "", lastname: "", email: "", password: "", cpass: "" });
-            //     toast.success(`${json.message}`, {
-            //         position: "top-center"
-            //     });
-            // }
-            // else {
-            //     toast.error(`${json.error}`, {
-            //         position: "top-center"
-            //     });
-            // }
+            const response = await fetch(`localhost:5000/api/auth/createuser`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ firstname: firstname, lastname: lastname, email: email, password: password, admin: isAdmin })
+            });
+            const json = await response.json()
+            console.log(json);
+            if (json.success) {
+                setCredentials({ firstname: "", lastname: "", email: "", password: "", cpass: ""});
+                alert(`${json.message}`, {
+                    position: "top-center"
+                });
+            }
+            else {
+                alert(`${json.error}`, {
+                    position: "top-center"
+                });
+            }
         }
         else {
             alert("Password are not same", {
@@ -104,11 +108,19 @@ const Signup = () => {
                                                     <input type="password" id="cpass" name="cpass" value={credentials.cpass} className="form-control" placeholder="Confirm Password" onChange={onchange} minLength={5} required />
                                                 </Form.Group>
 
-                                                <Form.Label>Are You</Form.Label>
-                                                <select value={credentials.admin} onChange={onchange}>
-                                                    <option value="False">Employer</option>
-                                                    <option value="True">Employee</option>
-                                                </select>
+                                                {/* <Form.Label>Are You admin</Form.Label> */}
+                                                <div className="custom-control custom-switch">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="custom-control-input"
+                                                        id="admin-switch"
+                                                        checked={isAdmin}
+                                                        onChange={handleSwitchChange}
+                                                    />
+                                                    <label className="custom-control-label" htmlFor="admin-switch">
+                                                        Admin
+                                                    </label>
+                                                </div>
 
 
 

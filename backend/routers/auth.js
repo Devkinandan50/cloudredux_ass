@@ -4,9 +4,7 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
-var fetchuser = require('../middleware/fetchuser');
-var face_re = require('../middleware/face_reco');
-const SendMail = require('../middleware/sendemail');
+
 const crypto = require("crypto");
 
 const JWT_SECRET = process.env.JWTPRIVATEKEY;

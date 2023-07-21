@@ -16,10 +16,11 @@ export const HomeComp1 = () => {
                     <Link to="/addjob">
                     <button type="button" class="btn btn-primary">Add Job Post</button>
                     </Link>
+                    <h1> List of all Job</h1>
                 </>
             ) : (
                 <>
-
+                    <h1> List of all Job</h1>
                 </>
             )}
         </div>

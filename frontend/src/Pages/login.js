@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Col, Button, Row, Container, Card, Form } from 'react-bootstrap';
 import { Select, MenuItem, FormHelperText, FormControl, InputLabel } from '@material-ui/core';
+import StateContext from "../context/some_State/stateContext"
 
 
 
@@ -9,6 +10,10 @@ import { Select, MenuItem, FormHelperText, FormControl, InputLabel } from '@mate
 
 const Login = () => {
     let history = useHistory();
+    const sta_context = useContext(StateContext);
+
+    const { setlogin } = sta_context;
+
     const [credentials, setCredentials] = useState({ email: "", password: "" })
 
     const handleSubmit = async (e) => {
@@ -27,7 +32,7 @@ const Login = () => {
             // Save the auth token and redirect
             localStorage.setItem('token', json.authtoken);
             localStorage.setItem('admin', json.admin);
-            localStorage.setItem('login', true);
+            setlogin(true)
             // set_checK_loginOr_not(true);
             
             alert(`${json.message}`, {

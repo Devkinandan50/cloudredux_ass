@@ -1,18 +1,31 @@
 import React, { useContext, useEffect } from 'react'
 import { Link, useLocation } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
+import StateContext from "../context/some_State/stateContext";
 
 
 const Navbar = () => {
     let location = useLocation();
     let history = useHistory();
-    
 
+    const statecontext = useContext(StateContext);
+    const { login , setlogin} = statecontext;
+    
+    function handle_logout() {
+        let ans = window.confirm("You want to logout");
+        if (ans) {
+            localStorage.removeItem('token');
+            // localStorage.removeItem('token');
+            setlogin(false);
+            history.push("/");
+            window.location.reload();
+        }
+    }
 
     // without reload change data
-    // useEffect(() => {
-    //     set_checK_loginOr_not();
-    // }, [])
+    useEffect(() => {
+        setlogin();
+    }, [])
 
     return (
         <>
@@ -27,26 +40,30 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <Link className={`nav-link ${location.pathname === "/" ? "active" : ""}`} aria-current="page" to="/">Home</Link>
                             </li>
-                            {/* <li className="nav-item">
-                                <Link className={`nav-link ${location.pathname === "/allprojects" ? "active" : ""}`} aria-current="page" to="/allprojects">All Projects</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className={`nav-link ${location.pathname === "/howitsworks" ? "active" : ""}`} to="/howitsworks">How its Works</Link>
-                            </li> */}
-                            <li className="nav-item">
-                                <Link className={`nav-link ${location.pathname === "/main" ? "active" : ""}`} to="/main">Main</Link>
-                            </li>
+                            
 
                         </ul>
                         <form className="d-flex">
-                            
+                            {login ? (
+                                <>
+                                    {/* <p style={{color:'white', margin:'auto 1rem'}}> Hello, {loginusername}</p> */}
+                                    <i className="btn btn-primary mx-1" role="button" onClick={handle_logout}>Logout</i>
+                                </>
+                            ) : (
+                                <>
                                     <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link>
                                     <Link className="btn btn-primary mx-1" to="/signup" role="button">Signup</Link>
-                               
+                                </>
+                            )}
                         </form>
                     </div>
                 </div>
             </nav>
+
+
+
+
+
         </>
     )
 }

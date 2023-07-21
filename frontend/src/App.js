@@ -9,6 +9,7 @@ import { Home } from './Pages/Home';
 import Main from './Pages/Main';
 import Signup from './Pages/Signup';
 import Login from './Pages/login';
+import SomeState from './context/some_State/Some_State';
 
 // import dotenv from 'dotenv';
 // dotenv.config();
@@ -16,7 +17,7 @@ import Login from './Pages/login';
 function App() {
   return (
     <>
-      
+        <SomeState>
           <Router>
             <Navbar />
             <div className="container">
@@ -36,7 +37,7 @@ function App() {
               </Switch>
             </div>
           </Router>
-        
+          </SomeState>
     </>
   );
 }

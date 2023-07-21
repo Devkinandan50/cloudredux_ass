@@ -2,14 +2,13 @@ import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Col, Button, Row, Container, Card, Form } from 'react-bootstrap';
 import { Select, MenuItem, FormHelperText, FormControl, InputLabel } from '@material-ui/core';
-import dataList from './data';
 
 
 
 
 
 const Signup = () => {
-    const [users, setUsers] = useState(dataList);
+    
     const [credentials, setCredentials] = useState({ firstname: "", lastname: "", email: "", password: "", cpass: "", admin: "false" })
 
     const onchange = (e) => {
@@ -21,15 +20,13 @@ const Signup = () => {
         const { firstname, lastname, email, password, cpass } = credentials;
 
         if (cpass === password) {
-            setUsers((prevUsers) => [...prevUsers, credentials]);
-
-            console.log('Form data submitted:', credentials);
+            // console.log('Form data submitted:', credentials);
 
 
 
 
-            setCredentials({ firstname: "", lastname: "", email: "", password: "", cpass: "", admin: "false" });
             alert("signup success")
+            setCredentials({ firstname: "", lastname: "", email: "", password: "", cpass: "", admin: "false" });
             // const response = await fetch(`${host}/api/auth/createuser`, {
             //     method: 'POST',
             //     headers: {

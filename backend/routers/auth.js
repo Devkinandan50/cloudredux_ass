@@ -67,12 +67,7 @@ router.post('/createuser', [
       image: req.body.image,
     });
 
-    const token = await new Token({
-      userId: user._id,
-      token: crypto.randomBytes(32).toString("hex"),
-    }).save();
-    const url = `This Link Valid For 15 MINUTES ${process.env.BASE_URL}/users/${user.id}/verify/${token.token}`;
-    await SendMail(user.email, "Verify Email", url);
+    
 
 
     // const data = {
@@ -84,7 +79,7 @@ router.post('/createuser', [
     success = true;
 
     // res.json(user)
-    res.status(201).send({ success, "firstname": user.firstname, "lastname": user.lastname, "email": user.email, "message": "An Email sent to your account please verify" });
+    res.status(201).send({ success, "firstname": user.firstname, "lastname": user.lastname, "email": user.email, "message": "account created" });
     // res.status(201).send({ success, authtoken, "name": user.name, "email": user.email, "message": "An Email sent to your account please verify" });
 
   } catch (error) {
@@ -93,33 +88,6 @@ router.post('/createuser', [
   }
 })
 
-
-
-// Activate Account of signup user
-router.patch("/:id/verify/:token/", async (req, res) => {
-  let success = false;
-  try {
-    // const user = await User.findOne({ _id: req.params.id });
-    // if (!user) return res.status(400).send({ success, message: "Invalid link 1" });
-
-    const token = await Token.findOne({
-      userId: req.params.id,
-      token: req.params.token,
-    });
-    if (!token) return res.status(400).send({ success, message: "Invalid link 2" });
-
-    // await User.updateOne({ verified: true });
-    pro = await User.findByIdAndUpdate(req.params.id, { verified: true }, { new: true });
-    if (pro.verified) {
-      await token.remove();
-      success = true;
-    }
-    res.status(200).send({ success, message: "Email verified successfully" });
-  } catch (error) {
-    res.status(500).send({ message: "Internal Server Error" });
-    console.log(error)
-  }
-});
 
 // ROUTE : Authenticate a User using: POST "/api/auth/login". No login required
 router.post('/login', [
@@ -145,20 +113,6 @@ router.post('/login', [
     if (!passwordCompare) {
       success = false
       return res.status(400).json({ success, error: "Please try to login with correct credentials" });
-    }
-
-    if (!user.verified) {
-      let token = await Token.findOne({ userId: user._id });
-      if (!token) {
-        token = await new Token({
-          userId: user._id,
-          token: crypto.randomBytes(32).toString("hex"),
-        }).save();
-        const url = `This Link Valid For 15 MINUTES ${process.env.BASE_URL}/users/${user.id}/verify/${token.token}`;
-        await SendMail(user.email, "Verify Email", url);
-      }
-
-      return res.status(400).send({ error: "An Email sent to your account please verify" });
     }
 
 

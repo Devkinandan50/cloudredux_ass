@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const mongoURL = "mongodb://localhost:27017/projectTracker";
+const mongoURL = "mongodb://localhost:27017/cloudredux";
 // const mongoURL = process.env.DATABASE;
 
 // const connectToMongo = () =>{

@@ -25,10 +25,6 @@ const UserSchema = new Schema({
         type: Boolean,
         required: true
     },
-    verified: { 
-        type: Boolean, 
-        default: false 
-    },
     passwordverificationtoken: {
         type: String,
         default: "a"

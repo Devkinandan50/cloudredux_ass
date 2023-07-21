@@ -27,11 +27,7 @@ const Signup = () => {
         const { firstname, lastname, email, password, cpass } = credentials;
 
         if (cpass === password) {
-            console.log(credentials)
-            console.log(isAdmin)
-
-
-            const response = await fetch(`localhost:5000/api/auth/createuser`, {
+            const response = await fetch(`http://localhost:5000/api/auth/createuser`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -47,6 +43,7 @@ const Signup = () => {
                 });
             }
             else {
+                
                 alert(`${json.error}`, {
                     position: "top-center"
                 });

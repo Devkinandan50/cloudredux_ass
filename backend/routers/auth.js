@@ -1,6 +1,5 @@
 const express = require('express');
 const User = require('../models/User');
-const Token = require('../models/Token');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
@@ -49,7 +48,7 @@ router.post('/createuser', [
     // Check whether the user with this email exists already
     let user = await User.findOne({ email: req.body.email });
     if (user && !user.verified) {
-      return res.status(400).json({ success, error: "user already exists Please do email verification or login to get new verification link" })
+      return res.status(400).json({ success, error: "user already exists" })
     }
     if (user) {
       return res.status(400).json({ success, error: "Sorry a user with this email already exists" })
@@ -64,7 +63,7 @@ router.post('/createuser', [
       lastname: req.body.lastname,
       password: secPass,
       email: req.body.email,
-      image: req.body.image,
+      admin: req.body.admin,
     });
 
     
